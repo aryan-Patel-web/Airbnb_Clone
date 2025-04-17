@@ -1,0 +1,54 @@
+<% layout("./layouts/boilerplate.ejs") %>
+
+<body>
+          
+<div class="row">
+    <div class="col-8 offset-2">
+    <h3> Create New Listing</h3>
+    
+    <form method="post" action="/listings" novalidate class="needs-validation" 
+   enctype="multipart/form-data">                               <!--  enctype  ---file or image ko uplod k liye -->
+<div class="mb-3">
+    <label for="title" class="form-label">Title</label>
+<input class="form-control" name="listing[title]" placeholder="Enter a catchy title" type="text"  class="form-control" required >
+<div class="valid-feedback">Nice! title</div>
+</div>
+
+   <div class="mb-3"> 
+    <label for="description" class="form-label">Description</label>
+    <textarea name="listing[description]" placeholder="What a Place ..." class="form-control" required></textarea> 
+ </div>
+    
+  <div class="mb-3"> 
+        <label for="image" class="form-label">Upload Image</label>
+         <input name="listing[image]"   type="file" class="form-control" required> 
+    </div>
+    
+<div class="row">
+        <div class="mb-3"> 
+            <label for="price" class="form-label">Price</label>
+             <input name="listing[price]" placeholder="999"  type="text" class="form-control" required>  
+
+             <div class="invalid-feedback">Please enter valid price ?</div>
+            </div>
+
+      <div class="mb-3">
+        <label for="country" class="form-label">Country</label> 
+         <input name="listing[country]" placeholder="India" type="text" class="form-control" required>
+         <div class="invalid-feedback">Invalid country</div>
+         </div>
+</div>
+<label for="location" class="form-label">Location</label>
+<input name="listing[location]" placeholder="Jaipur , India" type="text" class="form-control" required>
+<div class="invalid-feedback">Invalid location</div>
+</div>
+</br>
+    <button class="btn btn-dark size">Submit</button>
+
+    </form>
+</br>
+
+</div>
+</div>
+
+<!-- Error handling section -->

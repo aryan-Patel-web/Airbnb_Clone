@@ -1,0 +1,20 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="row">
+    <div class="alert alert-danger col-6 offset-3" role="alert">
+        <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Danger:">
+            <use xlink:href="#exclamation-triangle-fill" />
+        </svg>
+        <img  class="small" src="https://media.istockphoto.com/id/1453860821/photo/security-and-attention-alert-yellow-symbol-yellow-sign-icon-with-triangle-and-exclamation.jpg?s=1024x1024&w=is&k=20&c=n57k5nPo6WCH2HGpY8-I5kVtOKiZJMUswHUIWgKa_hk="
+            class="img-thumbnail" alt="...">
+        <h4 class="alert-heading">
+            <%= err.message %>
+        </h4>
+        <p>
+            <%= err.trace %>
+        </p>
+        <% if (err.stack) { %>
+            <pre><%= err.stack %></pre>
+        <% } %>
+    </div>
+</div>

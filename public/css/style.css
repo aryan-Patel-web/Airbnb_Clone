@@ -1,0 +1,145 @@
+.poppins-black-italic {
+    font-family: "Poppins", serif !important;
+    font-weight: 900;
+    font-style: italic;
+  }
+  
+
+.navbar{
+    height: 5rem;
+}
+
+.icon{
+color: red;
+font-size: 3rem;
+}
+
+.nav-link{
+    color: #222222 !important;
+}
+
+.f-info-links a{
+text-decoration: none;
+color: #222222;
+}
+
+.f-info-links a:hover{
+    background-color: aqua;
+    border-radius: 100%;
+    text-decoration: dotted;
+}
+
+.f-info-links {
+    width: 100%;
+    font-weight: 600;
+}
+
+.f-info-socials {
+width: 100%;
+font-size: 1.3rem;
+margin-right: 2.1rem;
+
+}
+
+.f-info{
+    height: 7rem;
+    background-color: rgb(203, 200, 195);
+    display: flex;
+    text-align: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items:space-evenly;
+    font-weight: 800;
+    /* gap: 20px; */
+}
+
+.listing-card{
+
+    border: none !important;
+margin-bottom: 2rem;
+}
+
+.card-img-top{
+    border-radius: 1rem !important;
+    width: 100% !important;
+    object-fit: cover !important;
+}
+.card-body{
+    padding: 0 !important;
+}
+
+.card-text {
+    font-weight: 400;
+}
+
+.no-border{
+    text-decoration: none;
+}
+
+/* .card-img-overlay {
+    opacity:0;
+} */
+
+.hover:hover{
+    opacity: 0.2;
+    background-color: white;
+  
+}
+.size{
+    background-color: rgb(194, 42, 65) !important;
+    /* height: 10px !important; */
+}
+
+.show-img{
+    height: 30vh;
+
+}
+
+.align{
+    display: flex;
+    align-items: center;
+    justify-self: center;
+    padding: 2px;
+    margin: 5px;
+}
+.btn{
+    margin: 5px;
+}
+.abc{
+    background-color: black;
+    color: white !important;
+    padding-left: 21px;
+    padding-right: 21px;
+    height: 38px;
+    border-radius: 5px;
+}
+
+.small{
+    height: 199px;
+    margin-right: 50px;
+}
+
+.bold{
+    font-weight: 900;
+    font-style:italic;
+}
+
+#map {
+     position: absolute;
+     height: 200px;
+     width: 450px; 
+     margin-bottom: 30px;
+    }
+
+    .flex{
+        display: flex !important;
+        gap: 60px;
+        margin-bottom: 89px;
+
+    }
+    .flexx{
+        display: flex !important;
+        justify-content: space-evenly !important;
+        /* margin:40px  !important; */
+        /* padding: 20px !important; */
+    }

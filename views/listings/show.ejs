@@ -1,0 +1,202 @@
+<% layout("./layouts/boilerplate.ejs") %>
+
+
+<script>
+    // Ensure the environment variable and listing geometry are correctly passed to the client-side script
+    const mapToken = "<%= process.env.MAP_TOKEN %>";
+    const coordinates = <%- JSON.stringify(listing.geometry.coordinates) %>;
+
+    console.log(mapToken);  // Debugging: Logs map token
+    console.log(coordinates);  // Debugging: Logs coordinates
+
+    // Initialize map-related code in an external script (map.js)
+</script>
+
+<style>
+    .abcd{
+        margin-left: 400px;
+    }
+    .edit{
+        margin-right: 580px !important;
+    }
+    
+</style>
+
+<body>
+    <div class="row mb-1">
+        <div class="col-8 offset-2">
+            <!-- Listing Title -->
+            <h2 class="bold"><%= listing.title %></h2>
+
+            <!-- Listing Image and Map (Side by Side) -->
+            <div class="row mb-3">
+                <!-- Image Section -->
+                <div class="col-md-6">
+                    <img src="<%= listing.image.url %>" class="card-img-top show-img" alt="<%= listing.title %>">
+                </div>
+
+                <!-- Map Section -->
+                <div class="col-md-6">
+                    <div id="map" style="height: 164px; width: 379px; border-radius: 20px; margin-left: 50px;"></div>
+                </div>
+
+                <div class="col-md-6">
+                    <!-- <div id="map" style="height: 164px; width: 379px; border-radius: 20px; margin-left: 50px;"></div> -->
+                
+                </div>
+                
+             
+            </div>
+
+            <!-- Listing Owner -->
+            <div class="card-body">
+                <p class="card-text"><%= listing.title %></p>
+                <p class="card-text">
+                    Owned by <strong><i><%= listing.owner.username %></i></strong>
+                </p>
+            
+            </div>
+
+            <!-- Listing Details -->
+            <ul>
+                <li><strong>Description:</strong> <%= listing.description %></li>
+                <li><strong>Price:</strong> &#8377; <%= listing.price %></li>
+                <li><strong>Location:</strong> <%= listing.location %></li>
+                <li><strong>Country:</strong> <%= listing.country %></li>
+            </ul>
+
+
+            
+            <!-- Edit and Delete Authorization -->
+            <% if (currUser && listing.owner._id.equals(currUser._id)) { %>
+                <div class="align edit">
+                    <button class="btn btn-primary ">
+                        <a class="text-white text-decoration-none" href="/listings/<%= listing._id %>/edit">Edit</a>
+                    </button>
+                    <br><br>
+                    <form method="POST" action="/listings/<%= listing._id %>?_method=DELETE">
+                        <button class="btn btn-danger " type="submit"
+                            onclick="return confirm('Are you sure you want to delete this listing?')">
+                            Delete
+                        </button>
+                    </form>
+                </div>
+            <% } %>
+
+
+            <hr></hr>
+    <!-- /////////////////////////////// -->
+
+    <div class="flexx">
+    <div class="card" style="width: 12rem;">
+        <img src="https://media.istockphoto.com/id/1306458509/photo/indian-food-delivery-indian-cuisine-and-food-delivery-smartphone-apps-online.webp?a=1&b=1&s=612x612&w=0&k=20&c=HzQGbgrjq2jwpTKfl8goX-pdlSScNoXaeaGdk-GcALY=" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">Card title</h5>
+          <p class="card-text">Some food</p>
+          <a href="#" class="btn btn-primary">Hotel Food</a>
+        </div>
+      </div>
+
+      <div class="card" style="width: 12rem;">
+        <img src="https://media.istockphoto.com/id/1306458509/photo/indian-food-delivery-indian-cuisine-and-food-delivery-smartphone-apps-online.webp?a=1&b=1&s=612x612&w=0&k=20&c=HzQGbgrjq2jwpTKfl8goX-pdlSScNoXaeaGdk-GcALY=" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">Card title</h5>
+          <p class="card-text">Some food</p>
+          <a href="#" class="btn btn-primary">Swiggy</a>
+        </div>
+      </div>
+       
+      <div class="card" style="width: 12rem;">
+        <img src="https://media.istockphoto.com/id/1306458509/photo/indian-food-delivery-indian-cuisine-and-food-delivery-smartphone-apps-online.webp?a=1&b=1&s=612x612&w=0&k=20&c=HzQGbgrjq2jwpTKfl8goX-pdlSScNoXaeaGdk-GcALY=" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">Card title</h5>
+          <p class="card-text">Some food</p>
+          <a href="#" class="btn btn-primary">Zomato</a>
+        </div>
+      </div>
+
+    </div>
+
+
+<!-- ///////////////////////////////////////////////////////////////////////////////////////// -->
+
+            <!-- Leave a Review Section -->
+            <div class="col-8 offset-1 mt-3 ">
+                <hr />
+                <% if (currUser) { %>
+                    <h4>Leave a Review</h4>
+                    <form method="POST" action="/listings/<%= listing._id %>/reviews" novalidate class="needs-validation">
+                        <!-- Star Rating Section -->
+                        <fieldset class="starability-heartbeat">
+                            <legend>Rating:</legend>
+                            <% for (let i = 1; i <= 5; i++) { %>
+                                <input type="radio" id="rate<%= i %>" name="review[rating]" value="<%= i %>" required />
+                                <label for="rate<%= i %>" title="<%= i %> star"><%= i %> star</label>
+                            <% } %>
+                        </fieldset>
+
+                        <!-- Comment Section -->
+                        <div class="mb-3 mt-3">
+                            <label for="comment" class="form-label">Comment</label>
+                            <textarea name="review[comment]" id="comment" cols="5" rows="3" class="form-control"
+                                required></textarea>
+                            <div class="invalid-feedback">Please submit some comments</div>
+                        </div>
+                        <button class="btn btn-dark">Submit</button>
+                    </form>
+                <% } %>
+
+
+<!-- ///////////////////////////////////////////////////////////////////////////////////// -->
+
+
+
+
+
+                <!-- Display All Reviews -->
+                <p class="mt-4"><b>All Reviews</b></p>
+                <div class="row">
+                    <% for (let review of listing.reviews) { %>
+                        <div class="card col-5 ms-3 mb-3 shadow-sm">
+                            <div class="card-body">
+                                <!-- Reviewer Username -->
+                                <h5 class="card-title text-primary">
+                                    <% if (review.author && review.author.username) { %>
+                                        <%= review.author.username %>
+                                    <% } else { %>
+                                        Anonymous
+                                    <% } %>
+                                </h5>
+                                <!-- Review Comment -->
+                                <p class="card-text text-muted"><%= review.comment %></p>
+                                <!-- Review Rating -->
+                                <p>
+                                    <span class="badge bg-warning text-dark">
+                                        <i class="fa-solid fa-star"></i> Rating: <%= review.rating %> / 5
+                                    </span>
+                                </p>
+                            </div>
+                            <!-- Delete Review Button -->
+                            
+                                <div class="card-footer text-end">
+                                    <form method="POST"
+                                        action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE">
+                                        <button class="btn btn-sm btn-outline-danger"
+                                            onclick="return confirm('Are you sure you want to delete this review?');">
+                                            <i class="fa-solid fa-trash"></i> Delete
+                                        </button>
+                                    </form>
+                                </div>
+                            
+                        </div>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</body>
+
+<script src="/js/map.js"></script>
