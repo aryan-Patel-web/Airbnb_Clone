@@ -38,33 +38,36 @@ A full-stack web application that replicates the core functionality of Airbnb, a
 ## 🛠️ Tech Stack
 
 ### Frontend
-- **Framework:** React.js / Next.js
-- **Styling:** Tailwind CSS / Styled Components
-- **State Management:** Redux / Context API
-- **UI Components:** Material-UI / Ant Design
-- **Maps:** Google Maps API / Mapbox
+- **Framework:** React.js
+- **Language:** JavaScript
+- **Styling:** CSS / Styled Components
+- **State Management:** React Context API / useState
+- **HTTP Client:** Axios
+- **Routing:** React Router DOM
 
 ### Backend
 - **Runtime:** Node.js
-- **Framework:** Express.js / NestJS
-- **Database:** MongoDB / PostgreSQL
-- **Authentication:** JWT / NextAuth.js
-- **File Storage:** AWS S3 / Cloudinary
-- **Payment:** Stripe API
+- **Framework:** Express.js
+- **Language:** JavaScript
+- **Database:** MongoDB with Mongoose ODM
+- **Authentication:** JWT (JSON Web Tokens)
+- **File Storage:** Cloudinary
+- **Payment:** Stripe API (if implemented)
 
 ### DevOps & Tools
-- **Version Control:** Git
-- **Deployment:** Vercel / Netlify / AWS
-- **Database Hosting:** MongoDB Atlas / Supabase
-- **API Testing:** Postman
-- **Code Quality:** ESLint, Prettier
+- **Version Control:** Git & GitHub
+- **Package Manager:** npm
+- **Development:** Nodemon
+- **API Testing:** Postman / Thunder Client
+- **Image Management:** Cloudinary
+- **Code Quality:** ESLint
 
 ## 📦 Installation & Setup
 
 ### Prerequisites
 - Node.js (v16 or higher)
-- npm or yarn
-- MongoDB / PostgreSQL
+- npm
+- MongoDB (local installation or MongoDB Atlas)
 - Git
 
 ### 1. Clone the Repository
@@ -75,89 +78,75 @@ cd Airbnb_Clone
 
 ### 2. Install Dependencies
 
-#### Frontend
-```bash
-cd frontend
-npm install
-# or
-yarn install
-```
-
 #### Backend
 ```bash
 cd backend
 npm install
-# or
-yarn install
+```
+
+#### Frontend
+```bash
+cd frontend
+npm install
 ```
 
 ### 3. Environment Variables
 
-Create `.env` files in both frontend and backend directories:
-
-#### Frontend (.env.local)
-```env
-NEXT_PUBLIC_API_URL=http://localhost:8000
-NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=your_google_maps_api_key
-NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=your_stripe_publishable_key
-NEXTAUTH_URL=http://localhost:3000
-NEXTAUTH_SECRET=your_nextauth_secret
-GOOGLE_CLIENT_ID=your_google_client_id
-GOOGLE_CLIENT_SECRET=your_google_client_secret
-```
+Create `.env` files:
 
 #### Backend (.env)
 ```env
-PORT=8000
+PORT=5000
 NODE_ENV=development
 MONGODB_URI=mongodb://localhost:27017/airbnb_clone
-JWT_SECRET=your_jwt_secret
-STRIPE_SECRET_KEY=your_stripe_secret_key
-AWS_ACCESS_KEY_ID=your_aws_access_key
-AWS_SECRET_ACCESS_KEY=your_aws_secret_key
-AWS_REGION=your_aws_region
-S3_BUCKET_NAME=your_s3_bucket_name
-EMAIL_FROM=your_email
-EMAIL_SERVER_HOST=your_smtp_host
-EMAIL_SERVER_PORT=587
-EMAIL_SERVER_USER=your_email_username
-EMAIL_SERVER_PASSWORD=your_email_password
+JWT_SECRET=your_jwt_secret_key_here
+CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
+CLOUDINARY_API_KEY=your_cloudinary_api_key
+CLOUDINARY_API_SECRET=your_cloudinary_api_secret
+```
+
+#### Frontend (.env)
+```env
+REACT_APP_API_URL=http://localhost:5000/api
+REACT_APP_CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
 ```
 
 ### 4. Database Setup
 
-#### MongoDB
+#### MongoDB Local
 ```bash
-# Start MongoDB service
-mongod
+# Start MongoDB service (Windows)
+net start MongoDB
 
-# Create database (optional - will be created automatically)
-mongo
-use airbnb_clone
+# Start MongoDB service (macOS/Linux)
+sudo systemctl start mongod
+# or
+brew services start mongodb/brew/mongodb-community
 ```
 
-#### PostgreSQL (if using)
-```bash
-# Create database
-createdb airbnb_clone
+#### MongoDB Atlas (Cloud)
+1. Create account at [MongoDB Atlas](https://www.mongodb.com/atlas)
+2. Create a new cluster
+3. Get connection string and update `MONGODB_URI` in `.env`
 
-# Run migrations
-npm run migrate
-```
+### 5. Cloudinary Setup
+1. Create account at [Cloudinary](https://cloudinary.com/)
+2. Get your Cloud Name, API Key, and API Secret from dashboard
+3. Update the environment variables in `.env` files
 
-### 5. Start the Application
+### 6. Start the Application
 
-#### Backend
+#### Start Backend Server
 ```bash
 cd backend
 npm run dev
-# Server will start on http://localhost:8000
+# Server will start on http://localhost:5000
 ```
 
-#### Frontend
+#### Start Frontend Application
 ```bash
 cd frontend
-npm run dev
+npm start
 # Application will start on http://localhost:3000
 ```
 
@@ -166,25 +155,34 @@ npm run dev
 ```
 Airbnb_Clone/
 ├── frontend/
-│   ├── components/
-│   │   ├── common/
-│   │   ├── auth/
-│   │   ├── listings/
-│   │   └── booking/
-│   ├── pages/
-│   ├── styles/
-│   ├── utils/
-│   ├── hooks/
-│   └── store/
+│   ├── public/
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── common/
+│   │   │   ├── auth/
+│   │   │   ├── listings/
+│   │   │   └── booking/
+│   │   ├── pages/
+│   │   ├── styles/
+│   │   ├── utils/
+│   │   ├── context/
+│   │   ├── hooks/
+│   │   ├── App.js
+│   │   └── index.js
+│   ├── package.json
+│   └── .env
 ├── backend/
 │   ├── controllers/
 │   ├── models/
 │   ├── routes/
 │   ├── middleware/
 │   ├── utils/
-│   └── config/
-├── uploads/
-├── docs/
+│   ├── config/
+│   ├── server.js
+│   ├── package.json
+│   └── .env
+├── uploads/ (if using local storage)
+├── .gitignore
 └── README.md
 ```
 
@@ -218,31 +216,35 @@ Airbnb_Clone/
 
 ## 🚀 Deployment
 
-### Frontend (Vercel)
+### Frontend (Netlify/Vercel)
 ```bash
-# Install Vercel CLI
-npm i -g vercel
+# Build the React app
+cd frontend
+npm run build
 
-# Deploy
+# For Netlify
+# Upload the 'build' folder to Netlify
+
+# For Vercel
+npm i -g vercel
 vercel --prod
 ```
 
-### Backend (Railway/Heroku)
+### Backend (Railway/Render)
 ```bash
 # For Railway
+npm i -g @railway/cli
 railway login
 railway init
 railway up
 
-# For Heroku
-heroku create your-app-name
-git push heroku main
+# For Render
+# Connect your GitHub repo and deploy
 ```
 
 ### Database
-- **MongoDB Atlas:** Cloud MongoDB hosting
-- **Supabase:** PostgreSQL with real-time features
-- **PlanetScale:** MySQL with branching
+- **MongoDB Atlas:** Free cloud MongoDB hosting
+- **Railway MongoDB:** Integrated database solution
 
 ## 📱 Screenshots
 
